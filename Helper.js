@@ -370,14 +370,14 @@ const Helper = {
         }
 
         // Fallback for non-secure contexts or if Clipboard API fails
-        const textArea = document.createElement("textarea");
-        textArea.value = text_to_copy;
-        textArea.style.position = "fixed";
-        textArea.style.left = "-999999px";
-        textArea.style.top = "-999999px";
-        document.body.appendChild(textArea);
-        textArea.focus();
-        textArea.select();
+        const text_area = document.createElement("textarea");
+        text_area.value = text_to_copy;
+        text_area.style.position = "fixed";
+        text_area.style.left = "-999999px";
+        text_area.style.top = "-999999px";
+        document.body.appendChild(text_area);
+        text_area.focus();
+        text_area.select();
 
         try {
             const successful = document.execCommand('copy');
@@ -385,7 +385,7 @@ const Helper = {
         } catch (err) {
             console.error('Fallback clipboard copy failed:', err);
         } finally {
-            document.body.removeChild(textArea);
+            document.body.removeChild(text_area);
         }
     },
 
