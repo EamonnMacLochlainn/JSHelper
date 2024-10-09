@@ -54,10 +54,10 @@ const Helper = {
      * Checks if an element has a specific attribute.
      * Example usage: if (Helper.hasAttr($('#myElement'), 'data-id')) { ... }
      * @param {jQuery|HTMLElement} el - The element to check
-     * @param {string} attrName - The name of the attribute to check for
+     * @param {string} attr_name - The name of the attribute to check for
      * @returns {boolean} True if the attribute exists, false otherwise
      */
-    hasAttr: (el, attrName) => $(el).attr(attrName) !== undefined,
+    hasAttr: (el, attr_name) => $(el).attr(attr_name) !== undefined,
 
     /**
      * Gets the type of an element.
@@ -96,10 +96,10 @@ const Helper = {
      */
     scrollTo: function (offset, callback, callback_args)
     {
-        const fixedOffset = offset.toFixed();
+        const fixed_offset = offset.toFixed();
         const onScroll = function ()
         {
-            if (window.scrollY.toFixed() === fixedOffset)
+            if (window.scrollY.toFixed() === fixed_offset)
             {
                 window.removeEventListener('scroll', onScroll)
                 callback(callback_args)
@@ -198,10 +198,10 @@ const Helper = {
      * @param {string} desired_format - The desired output format
      * @returns {string} The formatted datetime string
      */
-    formatDatetimeString: function (datetime_string, desired_format) {
+    formatDatetimeString: function (datetime_string, desired_format)
+    {
         let date = new Date(datetime_string);
-
-        let formatMap = {
+        let format_map = {
             'd': date.getDate().toString().padStart(2, '0'),
             'm': (date.getMonth() + 1).toString().padStart(2, '0'),
             'Y': date.getFullYear(),
@@ -221,20 +221,20 @@ const Helper = {
         };
 
         let result = '';
-        let inBrackets = false;
+        let in_brackets = false;
 
-        for (let i = 0; i < desired_format.length; i++) {
-            if (desired_format[i] === '[') {
-                inBrackets = true;
-            } else if (desired_format[i] === ']') {
-                inBrackets = false;
-            } else if (inBrackets) {
+        for(let i = 0; i < desired_format.length; i++)
+        {
+            if(desired_format[i] === '[')
+                in_brackets = true;
+            else if (desired_format[i] === ']')
+                in_brackets = false;
+            else if (in_brackets)
                 result += desired_format[i];
-            } else if (formatMap.hasOwnProperty(desired_format[i])) {
-                result += formatMap[desired_format[i]];
-            } else {
+            else if (format_map.hasOwnProperty(desired_format[i]))
+                result += format_map[desired_format[i]];
+            else
                 result += desired_format[i];
-            }
         }
 
         return result;
@@ -263,10 +263,10 @@ const Helper = {
         value = parts.join('.');
 
         // Format for display (always show two decimal places)
-        let displayValue = parseFloat(value).toFixed(2);
-        if (isNaN(displayValue)) displayValue = '0.00';
+        let display_value = parseFloat(value).toFixed(2);
+        if(isNaN(display_value)) display_value = '0.00';
 
-        return displayValue;
+        return display_value;
     },
 
     /**
@@ -309,19 +309,19 @@ const Helper = {
      */
     ordinalSuffix: function(number)
     {
-        let numStr = number.toString(),
-            last = numStr.slice(-1),
+        let num_str = number.toString(),
+            last = num_str.slice(-1),
             ord = '';
         switch(last)
         {
             case '1':
-                ord = numStr.slice(-2) === '11' ? 'th' : 'st';
+                ord = num_str.slice(-2) === '11' ? 'th' : 'st';
                 break;
             case '2':
-                ord = numStr.slice(-2) === '12' ? 'th' : 'nd';
+                ord = num_str.slice(-2) === '12' ? 'th' : 'nd';
                 break;
             case '3':
-                ord = numStr.slice(-2) === '13' ? 'th' : 'rd';
+                ord = num_str.slice(-2) === '13' ? 'th' : 'rd';
                 break;
             default:
                 ord = 'th';
@@ -341,31 +341,31 @@ const Helper = {
         if(typeof n !== 'number')
             n = 5;
 
-        var text = '',
+        let text = '',
             possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
-        for(var i = 0; i < n; i++)
+        for(let i = 0; i < n; i++)
             text+= possible.charAt(Math.floor(Math.random() * possible.length));
 
         return text;
     },
 
-    copyToClipboard: function(textToCopy)
+    copyToClipboard: function(text_to_copy)
     {
         // Navigator clipboard api needs a secure context (https)
         if(navigator.clipboard && window.isSecureContext)
-            navigator.clipboard.writeText(textToCopy);
+            navigator.clipboard.writeText(text_to_copy);
         else
         {
-            const textArea = document.createElement("textarea");
-            textArea.value = textToCopy;
-            textArea.style.position = "absolute";
-            textArea.style.left = "-999999px";
+            const text_area = document.createElement("textarea");
+            text_area.value = text_to_copy;
+            text_area.style.position = "absolute";
+            text_area.style.left = "-999999px";
 
-            document.body.prepend(textArea);
-            textArea.select();
+            document.body.prepend(text_area);
+            text_area.select();
             document.execCommand('copy');
-            textArea.remove();
+            text_area.remove();
         }
     },
 
