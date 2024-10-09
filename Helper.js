@@ -350,22 +350,42 @@ const Helper = {
         return text;
     },
 
-    copyToClipboard: function(text_to_copy)
+    /**
+     * Copies the provided text to the clipboard.
+     * Uses the Clipboard API if available, otherwise falls back to execCommand('copy').
+     * @param {string} text_to_copy - The text to be copied to the clipboard
+     */
+    copyToClipboard: async function(text_to_copy)
     {
-        // Navigator clipboard api needs a secure context (https)
-        if(navigator.clipboard && window.isSecureContext)
-            navigator.clipboard.writeText(text_to_copy);
-        else
+        if (navigator.clipboard && window.isSecureContext)
         {
-            const text_area = document.createElement("textarea");
-            text_area.value = text_to_copy;
-            text_area.style.position = "absolute";
-            text_area.style.left = "-999999px";
+            // Use the Clipboard API if available
+            try {
+                await navigator.clipboard.writeText(text_to_copy);
+                return;
+            } catch (err) {
+                console.warn('Clipboard API failed:', err);
+                // Fall back to the alternative method
+            }
+        }
 
-            document.body.prepend(text_area);
-            text_area.select();
-            document.execCommand('copy');
-            text_area.remove();
+        // Fallback for non-secure contexts or if Clipboard API fails
+        const textArea = document.createElement("textarea");
+        textArea.value = text_to_copy;
+        textArea.style.position = "fixed";
+        textArea.style.left = "-999999px";
+        textArea.style.top = "-999999px";
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+
+        try {
+            const successful = document.execCommand('copy');
+            if (!successful) throw new Error('Copy command was unsuccessful');
+        } catch (err) {
+            console.error('Fallback clipboard copy failed:', err);
+        } finally {
+            document.body.removeChild(textArea);
         }
     },
 

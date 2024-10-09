@@ -150,6 +150,15 @@ Generates a random string of specified length.
 - **Returns**: string
 - **Example**: `let randomStr = Helper.randomString(10);`
 
+#### `copyToClipboard(text_to_copy)`
+Copies the provided text to the clipboard. Uses the Clipboard API if available in a secure context, otherwise falls back to the deprecated execCommand('copy') method.
+- **Parameters**: `text_to_copy` (string) - The text to be copied to the clipboard
+- **Example**:
+  ```javascript
+  Helper.copyToClipboard('This text will be copied to the clipboard');
+  ```
+- **Note**: The fallback method temporarily adds a hidden textarea to the DOM to perform the copy operation.
+
 ### Array-related Functions
 
 #### `range(start, end)`
