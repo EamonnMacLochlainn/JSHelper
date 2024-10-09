@@ -87,33 +87,6 @@ const Helper = {
         $('body').find('> .ui-dialog').remove();
     },
 
-    /**
-     * Smoothly scrolls to a specific offset and executes a callback.
-     * Example usage: Helper.scrollTo(500, function() { console.log('Scrolled!'); });
-     * @param {number} offset - The scroll offset to reach
-     * @param {Function} callback - The function to call after scrolling
-     * @param {*} callback_args - Arguments to pass to the callback function
-     */
-    scrollTo: function (offset, callback, callback_args)
-    {
-        const fixed_offset = offset.toFixed();
-        const onScroll = function ()
-        {
-            if (window.scrollY.toFixed() === fixed_offset)
-            {
-                window.removeEventListener('scroll', onScroll)
-                callback(callback_args)
-            }
-        }
-
-        window.addEventListener('scroll', onScroll)
-        onScroll()
-        window.scrollTo({
-            top: offset,
-            behavior: 'smooth'
-        })
-    },
-
     // String-related functions
 
     /**
@@ -459,5 +432,32 @@ const Helper = {
                 func.apply(context, args);
             }, delay);
         };
+    },
+
+    /**
+     * Smoothly scrolls to a specific offset and executes a callback.
+     * Example usage: Helper.scrollTo(500, function() { console.log('Scrolled!'); });
+     * @param {number} offset - The scroll offset to reach
+     * @param {Function} callback - The function to call after scrolling
+     * @param {*} callback_args - Arguments to pass to the callback function
+     */
+    scrollTo: function (offset, callback, callback_args)
+    {
+        const fixed_offset = offset.toFixed();
+        const onScroll = function ()
+        {
+            if (window.scrollY.toFixed() === fixed_offset)
+            {
+                window.removeEventListener('scroll', onScroll)
+                callback(callback_args)
+            }
+        }
+
+        window.addEventListener('scroll', onScroll)
+        onScroll()
+        window.scrollTo({
+            top: offset,
+            behavior: 'smooth'
+        })
     }
 };
