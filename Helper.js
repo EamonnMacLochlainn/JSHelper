@@ -192,7 +192,7 @@ const Helper = {
             'M': ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'][date.getMonth()],
             'F': ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'][date.getMonth()],
             'D': ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'][date.getDay()],
-            'S': self.getOrdinalSuffix(date.getDate())
+            'S': this.getOrdinalSuffix(date.getDate())
         };
 
         let result = '';
