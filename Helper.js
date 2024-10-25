@@ -274,33 +274,17 @@ const Helper = {
         return str;
     },
 
-    /**
-     * Adds an ordinal suffix to a number.
-     * Example usage: Helper.ordinalSuffix(23); // Returns '23rd'
-     * @param {number} number - The input number
-     * @returns {string} The number with its ordinal suffix
-     */
-    ordinalSuffix: function(number)
+    getOrdinalSuffix: function(number)
     {
-        let num_str = number.toString(),
-            last = num_str.slice(-1),
-            ord = '';
-        switch(last)
-        {
-            case '1':
-                ord = num_str.slice(-2) === '11' ? 'th' : 'st';
-                break;
-            case '2':
-                ord = num_str.slice(-2) === '12' ? 'th' : 'nd';
-                break;
-            case '3':
-                ord = num_str.slice(-2) === '13' ? 'th' : 'rd';
-                break;
-            default:
-                ord = 'th';
-                break;
-        }
-        return number.toString() + ord;
+        let j = number % 10,
+            k = number % 100;
+        if(j === 1 && k !== 11)
+            return "st";
+        if(j === 2 && k !== 12)
+            return "nd";
+        if(j === 3 && k !== 13)
+            return "rd";
+        return "th";
     },
 
     /**
